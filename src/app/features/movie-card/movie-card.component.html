@@ -1,0 +1,9 @@
+<div class="card bg-base-200 shadow-xl p-4">
+  <figure>
+    <img [src]="movie.poster" [alt]="movie.title" class="rounded-lg">
+  </figure>
+  <div class="p-4">
+    <h2 class="text-lg font-bold">{{ movie.title }} ({{ movie.year }})</h2>
+    <p class="text-sm text-gray-400">IMDB ID: {{ movie.imdbID }}</p>
+  </div>
+</div>
