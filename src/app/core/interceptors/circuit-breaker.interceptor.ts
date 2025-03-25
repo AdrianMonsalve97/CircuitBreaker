@@ -28,7 +28,7 @@ export const CircuitBreakerInterceptor: HttpInterceptorFn = (
     const makeRequest = () => {
       attempt++;
 
-      const failChance = attempt === 1 ? 0.8 : attempt === 2 ? 0.4 : 0.2;
+      const failChance = attempt === 1 ? 0.9 : attempt === 2 ? 0.6 : 0.3;
       if (shouldFail(failChance)) {
         console.warn(`❌ Intento ${attempt}/${maxRetries} fallido (Probabilidad: ${failChance * 100}%)`);
 

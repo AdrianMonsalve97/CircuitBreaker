@@ -1,7 +1,7 @@
 # 🎬 Implementación de Circuit Breaker en Angular con Interceptor HTTP y NgRx
 
-## 📌 Descripción de la prueba
-El objetivo de esta prueba es implementar un **Circuit Breaker** en una aplicación **Angular** para gestionar fallos en las solicitudes HTTP realizadas a la API pública de **OMDb** (Open Movie Database).
+## 📌 Descripción del ejercicio
+El objetivo de este ejercicio es implementar un **Circuit Breaker** en una aplicación **Angular** para gestionar fallos en las solicitudes HTTP realizadas a la API pública de **OMDb** (Open Movie Database).
 
 Para esto, se desarrolló un **interceptor HTTP** que detecta errores en las peticiones y evita sobrecargar la API cuando hay fallos repetidos. Además, se utilizó **NgRx** para gestionar el estado global de la aplicación, asegurando que los datos de las películas se almacenen de manera eficiente y reactiva.
 
@@ -24,7 +24,7 @@ Se simuló una degradación progresiva en la disponibilidad de la API, reduciend
 Se desarrolló un **interceptor HTTP** en Angular para capturar errores de las solicitudes y aplicar el **Circuit Breaker**. Cuando detecta fallos continuos, el sistema bloquea temporalmente nuevas peticiones, mostrando un mensaje de error al usuario.
 
 ### 🔹 2. Integración con la API de OMDb
-Se implementó un servicio (`MovieService`) para realizar solicitudes a **OMDb**, obteniendo información sobre películas a partir de un término de búsqueda.
+Se implementó un servicio (`omdb-api.service`) para realizar solicitudes a **OMDb**, obteniendo información sobre películas a partir de un término de búsqueda.
 
 ### 🔹 3. Implementación de NgRx para la gestión del estado
 Se utilizó **NgRx** para administrar el estado de la aplicación, permitiendo:
@@ -65,4 +65,7 @@ Para probar el **Circuit Breaker**, se ejecutaron solicitudes en distintos escen
 
 ---
 
-🚀 **¡Prueba completada con éxito!** 🔥
+## 🎞️ Video demostrativo
+Puedes ver una demostración de la aplicación en funcionamiento en el siguiente video:
+
+[![Circuit Breaker en Angular](https://img.youtube.com/vi/5gb72JqsdMQ/0.jpg)](https://youtu.be/5gb72JqsdMQ)
