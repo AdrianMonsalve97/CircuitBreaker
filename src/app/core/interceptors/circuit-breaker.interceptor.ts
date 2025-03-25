@@ -3,14 +3,13 @@ import { HttpRequest, HttpHandlerFn, HttpEvent } from '@angular/common/http';
 import { signal } from '@angular/core';
 import { Observable, throwError, timer, switchMap, catchError } from 'rxjs';
 
-// Estado persistente en sessionStorage
 const getStoredValue = (key: string, defaultValue: number | boolean) =>
   JSON.parse(sessionStorage.getItem(key) || JSON.stringify(defaultValue));
 
 const failureCount = signal(getStoredValue('failureCount', 0));
 const open = signal(getStoredValue('circuitOpen', false));
 const maxRetries = 3;
-const cooldownTime = 5000; // 5 segundos
+const cooldownTime = 5000;
 
 const shouldFail = (probability: number) => Math.random() < probability;
 
@@ -23,7 +22,7 @@ export const CircuitBreakerInterceptor: HttpInterceptorFn = (
     return throwError(() => new Error('Circuit Breaker está abierto 🚧'));
   }
 
-  let attempt = 0; // Contador de intentos
+  let attempt = 0;
 
   return new Observable<HttpEvent<any>>(observer => {
     const makeRequest = () => {
@@ -34,10 +33,9 @@ export const CircuitBreakerInterceptor: HttpInterceptorFn = (
         console.warn(`❌ Intento ${attempt}/${maxRetries} fallido (Probabilidad: ${failChance * 100}%)`);
 
         if (attempt < maxRetries) {
-          // Reintentar después de 1 segundo
+
           timer(1000).subscribe(makeRequest);
         } else {
-          // Activar Circuit Breaker si se falló 3 veces
           open.set(true);
           sessionStorage.setItem('circuitOpen', JSON.stringify(true));
           console.warn('🛑 Circuit Breaker ACTIVADO. Esperando...');
@@ -48,7 +46,7 @@ export const CircuitBreakerInterceptor: HttpInterceptorFn = (
             open.set(false);
             sessionStorage.setItem('failureCount', JSON.stringify(0));
             sessionStorage.setItem('circuitOpen', JSON.stringify(false));
-            makeRequest(); // Reintentar después del cooldown
+            makeRequest();
           });
         }
 

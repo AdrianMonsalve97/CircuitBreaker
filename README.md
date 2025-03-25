@@ -1,59 +1,68 @@
-# CircuitBracket
+# 🎬 Implementación de Circuit Breaker en Angular con Interceptor HTTP y NgRx
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.0.6.
+## 📌 Descripción de la prueba
+El objetivo de esta prueba es implementar un **Circuit Breaker** en una aplicación **Angular** para gestionar fallos en las solicitudes HTTP realizadas a la API pública de **OMDb** (Open Movie Database).
 
-## Development server
+Para esto, se desarrolló un **interceptor HTTP** que detecta errores en las peticiones y evita sobrecargar la API cuando hay fallos repetidos. Además, se utilizó **NgRx** para gestionar el estado global de la aplicación, asegurando que los datos de las películas se almacenen de manera eficiente y reactiva.
 
-To start a local development server, run:
+Se simuló una degradación progresiva en la disponibilidad de la API, reduciendo el porcentaje de fallos desde **80% hasta 20%**, para evaluar la capacidad del sistema de recuperarse y seguir funcionando de manera estable.
 
-```bash
-ng serve
-```
+---
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+## 🎯 Objetivo(s) de la prueba
+✅ Implementar un **Circuit Breaker** para evitar sobrecargas en la API.  
+✅ Desarrollar un **interceptor HTTP** para manejar errores globalmente.  
+✅ Integrar **NgRx** para gestionar el estado de las películas de manera centralizada.  
+✅ Probar la resiliencia del sistema con respuestas fallidas de la API de **OMDb**.  
+✅ Mejorar la experiencia del usuario mediante un manejo adecuado de errores y almacenamiento en caché.
 
-## Code scaffolding
+---
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+## 🛠️ Pasos implementados para llevar a cabo la prueba
 
-```bash
-ng generate component component-name
-```
+### 🔹 1. Creación de un `HttpInterceptor`
+Se desarrolló un **interceptor HTTP** en Angular para capturar errores de las solicitudes y aplicar el **Circuit Breaker**. Cuando detecta fallos continuos, el sistema bloquea temporalmente nuevas peticiones, mostrando un mensaje de error al usuario.
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+### 🔹 2. Integración con la API de OMDb
+Se implementó un servicio (`MovieService`) para realizar solicitudes a **OMDb**, obteniendo información sobre películas a partir de un término de búsqueda.
 
-```bash
-ng generate --help
-```
+### 🔹 3. Implementación de NgRx para la gestión del estado
+Se utilizó **NgRx** para administrar el estado de la aplicación, permitiendo:
+- Almacenar las películas obtenidas de la API.
+- Evitar realizar solicitudes innecesarias si la película ya ha sido consultada.
+- Manejar el estado de carga y errores de manera reactiva.
 
-## Building
+### 🔹 4. Simulación de fallos en la API
+Para probar el **Circuit Breaker**, se ejecutaron solicitudes en distintos escenarios donde la API devolvía errores en un rango del **80% al 20%** de las veces, midiendo la capacidad del sistema para adaptarse y recuperarse.
 
-To build the project run:
+---
 
-```bash
-ng build
-```
+## 🛠️ Tecnologías usadas en la prueba
+- **Lenguaje:** TypeScript
+- **Framework:** Angular
+- **Librerías:**
+  - **NgRx** (gestión del estado global)
+  - **RxJS** (manejo de estados y reintentos)
+  - **Angular HTTP Client**
+  - **DaisyUI + TailwindCSS** (para la UI)
+- **API utilizada:** [OMDb API](https://www.omdbapi.com/)
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+---
 
-## Running unit tests
+## 📊 Resultados
+✅ El **Circuit Breaker** previno sobrecargas en la API cuando los fallos fueron recurrentes.  
+✅ El **interceptor HTTP** gestionó errores de manera centralizada, mejorando la estabilidad de la aplicación.  
+✅ La API de **OMDb** respondió correctamente cuando la conexión era estable y bloqueó cuando se excedió el límite de peticiones.  
+✅ **NgRx permitió gestionar el estado de manera eficiente**, evitando llamadas innecesarias y mejorando el rendimiento de la aplicación.
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+---
 
-```bash
-ng test
-```
+## 📌 Conclusiones
+- **El uso de Circuit Breaker mejora la resiliencia** de aplicaciones conectadas a APIs externas.
+- **El interceptor HTTP centraliza la gestión de errores**, evitando redundancias en el código.
+- **NgRx optimiza la gestión del estado**, reduciendo peticiones innecesarias y mejorando la experiencia del usuario.
+- **Simular fallos permitió evaluar la robustez** del sistema ante interrupciones en el servicio.
 
-## Running end-to-end tests
+---
 
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+🚀 **¡Prueba completada con éxito!** 🔥

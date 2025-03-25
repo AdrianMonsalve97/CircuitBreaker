@@ -18,7 +18,7 @@ export class OmdbApiService {
   private handleError(error: any): Observable<any> {
     console.error('⚠️ Error en API:', error);
     this.error.set(`No se pudieron obtener los datos.`);
-    this.loading.set(false); // ✅ Asegurar que loading se detiene
+    this.loading.set(false);
     return throwError(() => new Error('🔥 Circuit Breaker activado: Fallos consecutivos.'));
   }
 
@@ -36,7 +36,7 @@ export class OmdbApiService {
           this.movies.set(response.Search || []);
         } else {
           this.error.set('No se encontraron películas.');
-          this.movies.set([]); // ✅ Evitar undefined en el array
+          this.movies.set([]);
         }
         this.loading.set(false);
       }),
