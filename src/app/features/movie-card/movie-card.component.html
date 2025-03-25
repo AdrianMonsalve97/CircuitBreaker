@@ -1,9 +1,10 @@
-<div class="card bg-base-200 shadow-xl p-4">
-  <figure>
-    <img [src]="movie.poster" [alt]="movie.title" class="rounded-lg">
+<div class="card w-80 bg-base-100 shadow-xl">
+  <figure class="px-4 pt-4">
+    <img [src]="movie.poster" [alt]="movie.title" class="rounded-xl w-full h-48 object-cover" />
   </figure>
-  <div class="p-4">
-    <h2 class="text-lg font-bold">{{ movie.title }} ({{ movie.year }})</h2>
-    <p class="text-sm text-gray-400">IMDB ID: {{ movie.imdbID }}</p>
+  <div class="card-body">
+    <h2 class="card-title text-lg font-bold">{{ movie.title }}</h2>
+    <p class="text-sm text-gray-500">{{ movie.year }} - {{ movie.country }}</p>
+    <p class="text-sm"><span class="font-semibold">Reparto:</span> {{ movie.actors }}</p>
   </div>
 </div>

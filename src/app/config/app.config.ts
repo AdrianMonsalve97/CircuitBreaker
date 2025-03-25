@@ -1,19 +1,19 @@
 import { ApplicationConfig } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
-import { provideStore } from '@ngrx/store';
+import {provideState, provideStore} from '@ngrx/store';
 import { provideEffects } from '@ngrx/effects';
-import { movieReducer } from '../state/movie/movie.reducer';
+import { movieFeature } from '../state/movie/movie.reducer';  // ✅ Importar `movieFeature`
 import { MovieEffects } from '../state/movie/movie.effects';
 import { CircuitBreakerInterceptor } from '../core/interceptors/circuit-breaker.interceptor';
+import {appRoutes} from '../app.routes';
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideRouter([
-      { path: '', component: import('../features/movie-search/movie-search.component').then(m => m.MovieSearchComponent) }
-    ]),
+    provideRouter(appRoutes),
     provideHttpClient(withInterceptors([CircuitBreakerInterceptor])),
-    provideStore({ movie: movieReducer }),
-    provideEffects(MovieEffects)
-  ]
+    provideStore(),
+    provideState(movieFeature),
+    provideEffects(MovieEffects),
+  ],
 };

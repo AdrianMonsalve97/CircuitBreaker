@@ -1,22 +1,44 @@
-import { createReducer, on } from '@ngrx/store';
+import { createFeature, createReducer, on } from '@ngrx/store';
 import { loadMovies, loadMoviesSuccess, loadMoviesFailure } from './movie.actions';
-import { Movie } from '../models/movie.model';
 
 export interface MovieState {
-  movies: Movie[];
+  movies: any[];
   loading: boolean;
   error: string | null;
 }
 
-const initialState: MovieState = {
+export const initialState: MovieState = {
   movies: [],
   loading: false,
   error: null
 };
 
-export const movieReducer = createReducer(
-  initialState,
-  on(loadMovies, (state) => ({ ...state, loading: true, error: null })),
-  on(loadMoviesSuccess, (state, { movies }) => ({ ...state, loading: false, movies })),
-  on(loadMoviesFailure, (state, { error }) => ({ ...state, loading: false, error }))
-);
+export const movieFeature = createFeature({
+  name: 'movies',
+  reducer: createReducer(
+    initialState,
+    on(loadMovies, (state) => ({
+      ...state,
+      loading: true,
+      error: null
+    })),
+    on(loadMoviesSuccess, (state, { movies }) => ({
+      ...state,
+      movies,
+      loading: false,
+      error: null
+    })),
+    on(loadMoviesFailure, (state, { error }) => ({
+      ...state,
+      loading: false,
+      error
+    }))
+  )
+});
+
+export const {
+  selectMoviesState,
+  selectMovies,
+  selectError,
+  selectLoading
+} = movieFeature;
